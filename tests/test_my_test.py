@@ -33,7 +33,6 @@ def test_point_off_plane():
     origin = np.array([0, 0, 0])
     
     m.distance_to_plane(point, normal, origin)
-    print_coverage()
     assert branch_coverage["normal_vector_esitmation_2"] == True
 
 def coverage():
