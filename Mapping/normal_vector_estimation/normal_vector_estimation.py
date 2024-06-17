@@ -1,6 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from coverage import branch_coverage
+from coverage_tracker import branch_coverage
 from utils.plot import plot_3d_vector_arrow, plot_triangle, set_equal_3d_axis
 
 show_animation = True
@@ -55,14 +55,11 @@ def sample_3d_points_from_a_plane(num_samples, normal):
 
 
 def distance_to_plane(point, normal, origin):
-    global branch_coverage
     dot_product = np.dot(normal, point) - np.dot(normal, origin)
     if np.isclose(dot_product, 0):
-        print("hello")
         branch_coverage["normal_vector_esitmation_1"] = True
         return 0.0
     else:
-        print("he222llo")
         branch_coverage["normal_vector_esitmation_2"] = True
         distance = abs(dot_product) / np.linalg.norm(normal)
         return distance
@@ -180,4 +177,3 @@ def main2(rng=None):
 if __name__ == '__main__':
     # main1()
     main2()
-
