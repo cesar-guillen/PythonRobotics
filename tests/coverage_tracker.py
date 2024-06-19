@@ -1,6 +1,10 @@
 branch_coverage = {
     "normal_vector_esitmation_1": False,  # if branch for np is close
     "normal_vector_esitmation_2": False,  # else branch np is not close
-    "check_occupied_from_xy_index_1" : False, # if branch if its occupied
-    "check_occupied_from_xy_index_2" : False # not occupied
+    "verify_node_x_small": False, 
+    "verify_node_y_small": False,
+    "verify_node_x_large": False,
+    "verify_node_y_large": False,
+    "verify_node_has_obstacle": False,
+    "verify_node_true": False,
 }
