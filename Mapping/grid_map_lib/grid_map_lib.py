@@ -8,8 +8,6 @@ author: Atsushi Sakai
 from functools import total_ordering
 import matplotlib.pyplot as plt
 import numpy as np
-from coverage_tracker import branch_coverage
-
 
 
 @total_ordering
@@ -205,10 +203,8 @@ class GridMap:
         val = self.get_value_from_xy_index(x_ind, y_ind)
 
         if val is None or val >= occupied_val:
-            branch_coverage["check_occupied_from_xy_index_1"] = True
             return True
         else:
-            branch_coverage["check_occupied_from_xy_index_2"] = True
             return False
 
     def expand_grid(self, occupied_val=FloatGrid(1.0)):
