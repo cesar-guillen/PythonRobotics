@@ -10,7 +10,7 @@ See Wikipedia article (https://en.wikipedia.org/wiki/A*_search_algorithm)
 
 import heapq
 import math
-from coverage_tracker import branch_coverage
+from coverage_tracker import branch_coverage_2 as branch_coverage
 
 import matplotlib.pyplot as plt
 
@@ -180,4 +180,5 @@ def get_motion_model():
               [1, 1, math.sqrt(2)]]
 
     return motion
+
 
