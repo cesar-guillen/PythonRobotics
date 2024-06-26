@@ -10,6 +10,7 @@ See Wikipedia article (https://en.wikipedia.org/wiki/A*_search_algorithm)
 
 import heapq
 import math
+from coverage_tracker import branch_coverage_2 as branch_coverage
 
 import matplotlib.pyplot as plt
 
@@ -119,17 +120,22 @@ def calc_distance_heuristic(gx, gy, ox, oy, resolution, rr):
 
 def verify_node(node, obstacle_map, min_x, min_y, max_x, max_y):
     if node.x < min_x:
+        branch_coverage["verify_node_x_small"] = True
         return False
     elif node.y < min_y:
+        branch_coverage["verify_node_y_small"] = True
         return False
     elif node.x >= max_x:
+        branch_coverage["verify_node_x_large"] = True
         return False
     elif node.y >= max_y:
+        branch_coverage["verify_node_y_large"] = True
         return False
 
     if obstacle_map[node.x][node.y]:
+        branch_coverage["verify_node_has_obstacle"] = True
         return False
-
+    branch_coverage["verify_node_true"] = True
     return True
 
 
@@ -174,3 +180,5 @@ def get_motion_model():
               [1, 1, math.sqrt(2)]]
 
     return motion
+
+
