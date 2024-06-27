@@ -8,9 +8,15 @@ from mpl_toolkits.mplot3d import art3d
 from matplotlib.patches import FancyArrowPatch
 from mpl_toolkits.mplot3d.proj3d import proj_transform
 from mpl_toolkits.mplot3d import Axes3D
-
 from utils.angle import rot_mat_2d
 
+# Coverage tracking dictionary
+coverage_tracker = {}
+
+def track_coverage(branch_id):
+    if branch_id not in coverage_tracker:
+        coverage_tracker[branch_id] = 0
+    coverage_tracker[branch_id] += 1
 
 def plot_covariance_ellipse(x, y, cov, chi2=3.0, color="-r", ax=None):
     """
@@ -60,6 +66,8 @@ def plot_ellipse(x, y, a, b, angle, color="-r", ax=None, **kwargs):
     ---------
     None. This function plots the ellipse based on the specified parameters.
     """
+    # Track entering the function
+    track_coverage("plot_ellipse_entered")
 
     t = np.arange(0, 2 * math.pi + 0.1, 0.1)
     px = [a * math.cos(it) for it in t]
@@ -68,8 +76,10 @@ def plot_ellipse(x, y, a, b, angle, color="-r", ax=None, **kwargs):
     px = np.array(fx[0, :] + x).flatten()
     py = np.array(fx[1, :] + y).flatten()
     if ax is None:
+        track_coverage("plot_ellipse_no_ax")
         plt.plot(px, py, color, **kwargs)
     else:
+        track_coverage("plot_ellipse_with_ax")
         ax.plot(px, py, color, **kwargs)
 
 
@@ -232,3 +242,7 @@ if __name__ == '__main__':
     plt.axis('equal')
     plt.show()
 
+    # Print coverage tracker results
+    print("Coverage Tracker Results:")
+    for branch_id, count in coverage_tracker.items():
+        print(f"{branch_id}: {count} times")
