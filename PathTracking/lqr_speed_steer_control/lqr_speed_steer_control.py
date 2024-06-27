@@ -12,6 +12,7 @@ import numpy as np
 import scipy.linalg as la
 import pathlib
 from utils.angle import angle_mod
+from PathTracking.lqr_speed_steer_control.branch_coverage_2 import branch_coverage_2
 sys.path.append(str(pathlib.Path(__file__).parent.parent.parent))
 
 from PathPlanning.CubicSpline import cubic_spline_planner
@@ -40,8 +41,10 @@ class State:
 def update(state, a, delta):
 
     if delta >= max_steer:
+        branch_coverage_2["update_1"] = True
         delta = max_steer
     if delta <= - max_steer:
+        branch_coverage_2["update_2"] = True
         delta = - max_steer
 
     state.x = state.x + state.v * math.cos(state.yaw) * dt
