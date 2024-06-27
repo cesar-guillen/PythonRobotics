@@ -1,9 +1,10 @@
 import conftest
 import numpy as np
-from coverage_tracker import branch_coverage, branch_coverage_2, branch_coverage_3
+from coverage_tracker import branch_coverage, branch_coverage_2, branch_coverage_3, branch_coverage_4
 from Mapping.normal_vector_estimation import normal_vector_estimation as m
 from PathPlanning.HybridAStar import dynamic_programming_heuristic as n
 from PathPlanning.PotentialFieldPlanning import potential_field_planning as x
+from PathPlanning.HybridAStar import hybrid_a_star as y 
 from collections import deque
 
 
@@ -47,6 +48,18 @@ def print_coverage_3():
         coverage_percentage = 0.0
     print(f"Total function coverage: {coverage_percentage:.2f}%")
 
+def print_coverage_4():
+    hits = 0
+    for branch, hit in branch_coverage_4.items():
+        if hit:
+            hits += 1  
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
+    
+    if len(branch_coverage) > 0:
+        coverage_percentage = hits / len(branch_coverage_4) * 100
+    else:
+        coverage_percentage = 0.0
+    print(f"Total function coverage: {coverage_percentage:.2f}%")
 
 def test_distance_to_plane_point_on_plane():
     point = np.array([0, 0, 0])
@@ -137,12 +150,40 @@ def test_oscillations_detection_with_oscillation_2():
     result = x.oscillations_detection(previous_ids, ix, iy)
     assert result == True
 
+class Constraint:
+        def __init__(self, min_x, max_x, min_y, max_y):
+            self.min_x = min_x
+            self.max_x = max_x
+            self.min_y = min_y
+            self.max_y = max_y
+
+
+def setUp():
+    node_within_bounds = y.Node(x_ind=5, y_ind=5, yaw_ind=0, direction='N',
+                              x_list=[], y_list=[], yaw_list=[], directions=[])
+    
+    constraint = Constraint(min_x=0, max_x=10, min_y=0, max_y=10)
+    
+    return node_within_bounds, constraint
+
+def test_verify_index_within_bounds():
+    node_within_bounds, constraint = setUp()
+    result = y.verify_index(node_within_bounds, constraint)
+    assert result == True
+
+def test_verify_index_outside_bounds():
+    node_outside_bounds = y.Node(x_ind=15, y_ind=5, yaw_ind=0, direction='N',
+                               x_list=[], y_list=[], yaw_list=[], directions=[])
+    constraint = Constraint(min_x=0, max_x=10, min_y=0, max_y=10)
+    result = y.verify_index(node_outside_bounds, constraint)
+    assert result == False
+
 def test_print_coverages():
     print('')
     print_coverage_1()
     print_coverage_2()
     print_coverage_3()
-
+    print_coverage_4()
 
 if __name__ == '__main__':
     conftest.run_this_test(__file__)
