@@ -9,6 +9,7 @@ import math
 
 import matplotlib.pyplot as plt
 import numpy as np
+from coverageTrackerDenis import branch_coverage_pid
 
 import sys
 import pathlib
@@ -30,8 +31,10 @@ def PIDControl(target, current):
     a = Kp * (target - current)
 
     if a > unicycle_model.accel_max:
+        branch_coverage_pid["pure_pursuit_1"] = True
         a = unicycle_model.accel_max
     elif a < -unicycle_model.accel_max:
+        branch_coverage_pid["pure_pursuit_2"] = True
         a = -unicycle_model.accel_max
 
     return a
