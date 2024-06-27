@@ -1,4 +1,3 @@
-![Capture_git_10](https://github.com/cesar-guillen/PythonRobotics/assets/91685879/e64e0619-599c-47e3-b25c-0200447670de)# Report for Assignment 1
 
 ## Project chosen
 
