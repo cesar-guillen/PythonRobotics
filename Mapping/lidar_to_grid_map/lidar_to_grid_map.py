@@ -8,6 +8,7 @@ author: Erno Horvath, Csaba Hajdu based on Atsushi Sakai's scripts
 
 import math
 from collections import deque
+from Mapping.lidar_to_grid_map.branch_coverage import branch_coverage_1
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -126,7 +127,7 @@ def init_flood_fill(center_point, obstacle_points, xy_points, min_coord,
 
 def flood_fill(center_point, occupancy_map):
     """
-    center_point: starting point (x,y) of fill
+     center_point: starting point (x,y) of fill
     occupancy_map: occupancy map generated from Bresenham ray-tracing
     """
     # Fill empty areas with queue method
@@ -138,25 +139,32 @@ def flood_fill(center_point, occupancy_map):
         nx, ny = n
         # West
         if nx > 0:
+            branch_coverage_1["flood_fill_1"] = True
             if occupancy_map[nx - 1, ny] == 0.5:
+                branch_coverage_1["flood_fill_2"] = True
                 occupancy_map[nx - 1, ny] = 0.0
                 fringe.appendleft((nx - 1, ny))
         # East
         if nx < sx - 1:
+            branch_coverage_1["flood_fill_3"] = True
             if occupancy_map[nx + 1, ny] == 0.5:
+                branch_coverage_1["flood_fill_4"] = True
                 occupancy_map[nx + 1, ny] = 0.0
                 fringe.appendleft((nx + 1, ny))
         # North
         if ny > 0:
+            branch_coverage_1["flood_fill_5"] = True
             if occupancy_map[nx, ny - 1] == 0.5:
+                branch_coverage_1["flood_fill_6"] = True
                 occupancy_map[nx, ny - 1] = 0.0
                 fringe.appendleft((nx, ny - 1))
         # South
         if ny < sy - 1:
+            branch_coverage_1["flood_fill_7"] = True
             if occupancy_map[nx, ny + 1] == 0.5:
+                branch_coverage_1["flood_fill_8"] = True
                 occupancy_map[nx, ny + 1] = 0.0
                 fringe.appendleft((nx, ny + 1))
-
 
 def generate_ray_casting_grid_map(ox, oy, xy_resolution, breshen=True):
     """
