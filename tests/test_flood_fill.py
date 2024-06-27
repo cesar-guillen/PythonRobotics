@@ -4,7 +4,7 @@ import math
 import unittest
 from collections import deque
 from Mapping.lidar_to_grid_map.lidar_to_grid_map import flood_fill, init_flood_fill, calc_grid_map_config
-from Mapping.lidar_to_grid_map import branch_coverage
+from Mapping.lidar_to_grid_map.lidar_to_grid_map import branch_coverage
 from Mapping.lidar_to_grid_map.branch_coverage import branch_coverage_2
 from PathTracking.lqr_speed_steer_control.lqr_speed_steer_control import State, update, dt, L, max_steer
 
