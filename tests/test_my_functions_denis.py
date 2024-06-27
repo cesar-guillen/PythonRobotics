@@ -1,7 +1,7 @@
 import conftest
 import numpy as np
-from coverageTracker import branch_coverage_sobol
-from coverageTracker import branch_coverage_pid
+from coverageTrackerDenis import branch_coverage_sobol
+from coverageTrackerDenis import branch_coverage_pid
 from PathPlanning.RRT.sobol import sobol as s
 from PathPlanning.ClosedLoopRRTStar import pure_pursuit as p
 from PathPlanning.ClosedLoopRRTStar import unicycle_model as u

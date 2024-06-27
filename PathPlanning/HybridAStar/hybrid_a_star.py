@@ -13,6 +13,8 @@ import numpy as np
 from scipy.spatial import cKDTree
 import sys
 import pathlib
+from coverage_tracker import branch_coverage_4
+
 sys.path.append(str(pathlib.Path(__file__).parent.parent))
 
 from dynamic_programming_heuristic import calc_distance_heuristic
@@ -362,8 +364,9 @@ def get_final_path(closed, goal_node):
 def verify_index(node, c):
     x_ind, y_ind = node.x_index, node.y_index
     if c.min_x <= x_ind <= c.max_x and c.min_y <= y_ind <= c.max_y:
+        branch_coverage_4["verify_index_true"] = True
         return True
-
+    branch_coverage_4["verify_index_false"] = True
     return False
 
 

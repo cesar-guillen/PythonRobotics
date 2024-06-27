@@ -12,6 +12,7 @@ https://www.cs.cmu.edu/~motionplanning/lecture/Chap4-Potential-Field_howie.pdf
 from collections import deque
 import numpy as np
 import matplotlib.pyplot as plt
+from coverage_tracker import branch_coverage_3
 
 # Parameters
 KP = 5.0  # attractive potential gain
@@ -97,9 +98,11 @@ def oscillations_detection(previous_ids, ix, iy):
     previous_ids_set = set()
     for index in previous_ids:
         if index in previous_ids_set:
+            branch_coverage_3["check_oscillations_1"] = True
             return True
         else:
             previous_ids_set.add(index)
+    branch_coverage_3["check_oscillations_2"] = True
     return False
 
 
