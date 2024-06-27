@@ -1,8 +1,10 @@
 import conftest
 import numpy as np
-from coverage_tracker import branch_coverage, branch_coverage_2
+from coverage_tracker import branch_coverage, branch_coverage_2, branch_coverage_3
 from Mapping.normal_vector_estimation import normal_vector_estimation as m
 from PathPlanning.HybridAStar import dynamic_programming_heuristic as n
+from PathPlanning.PotentialFieldPlanning import potential_field_planning as x
+from collections import deque
 
 
 
@@ -31,6 +33,20 @@ def print_coverage_2():
     else:
         coverage_percentage = 0.0
     print(f"Total function coverage: {coverage_percentage:.2f}%")
+
+def print_coverage_3():
+    hits = 0
+    for branch, hit in branch_coverage_3.items():
+        if hit:
+            hits += 1  
+        print(f"{branch} was {'hit' if hit else 'not hit'}")
+    
+    if len(branch_coverage) > 0:
+        coverage_percentage = hits / len(branch_coverage_3) * 100
+    else:
+        coverage_percentage = 0.0
+    print(f"Total function coverage: {coverage_percentage:.2f}%")
+
 
 def test_distance_to_plane_point_on_plane():
     point = np.array([0, 0, 0])
@@ -92,12 +108,41 @@ def test_verify_out_of_bounds_y_large():
     obstacle_map = [[False]*10 for _ in range(10)]
     assert n.verify_node(node, obstacle_map, 0, 0, 10, 10) == False
 
+
+def test_oscillations_detection_no_oscillation():
+    previous_ids = deque()
+    ix = 1
+    iy = 2
+    result = x.oscillations_detection(previous_ids, ix, iy)
+    assert result == False
+
+def test_oscillations_detection_no_oscillation_2():
+    previous_ids = deque([(1, 2), (3, 4), (5, 6)]) 
+    ix = 9
+    iy = 10
+    result = x.oscillations_detection(previous_ids, ix, iy)
+    assert result == False
+
+def test_oscillations_detection_with_oscillation():
+    previous_ids = deque([(1, 2), (3, 4), (5, 6)]) 
+    ix = 3
+    iy = 4
+    result = x.oscillations_detection(previous_ids, ix, iy)
+    assert result == True
+
+def test_oscillations_detection_with_oscillation_2():
+    previous_ids = deque([(7, 8), (9, 10), (11, 12)]) 
+    ix = 11
+    iy = 12
+    result = x.oscillations_detection(previous_ids, ix, iy)
+    assert result == True
+
 def test_print_coverages():
     print('')
     print_coverage_1()
     print_coverage_2()
+    print_coverage_3()
 
 
 if __name__ == '__main__':
     conftest.run_this_test(__file__)
-
