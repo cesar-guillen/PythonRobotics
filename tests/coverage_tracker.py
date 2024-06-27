@@ -17,3 +17,8 @@ branch_coverage_3 = {
     "check_oscillations_1": False,  # there are occilations 
     "check_oscillations_2": False,  # No occilations
 }
+
+branch_coverage_4 = {
+    "verify_index_true": False,
+    "verify_index_false" : False
+}
